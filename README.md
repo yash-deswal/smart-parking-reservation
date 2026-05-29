@@ -65,3 +65,4 @@ curl -X POST http://localhost:8080/slots/1/release
 ```bash
 curl -X GET http://localhost:8080/health
 ```
+test
