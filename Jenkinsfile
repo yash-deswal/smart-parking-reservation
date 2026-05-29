@@ -27,6 +27,13 @@ pipeline {
                 sh 'docker build -t smart-parking:latest .'
             }
         }
+
+        stage('Deploy') {
+            steps {
+                sh 'docker compose down'
+                sh 'docker compose up -d --build'
+            }
+        }
     }
 
     post {
