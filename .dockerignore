@@ -1,4 +1,7 @@
 .git
+.gitignore
 .idea
 .vscode
 target/*.original
+README.md
+HELP.md
