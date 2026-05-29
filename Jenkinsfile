@@ -30,19 +30,21 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'docker compose down'
-                sh 'docker compose up -d --build'
+                sh '''
+                    docker compose down || true
+                    docker compose up -d --build
+                '''
             }
         }
     }
 
     post {
         success {
-            echo 'Build completed successfully'
+            echo 'Build and deployment completed successfully'
         }
 
         failure {
-            echo 'Build failed'
+            echo 'Pipeline failed'
         }
     }
 }
