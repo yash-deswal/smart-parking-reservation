@@ -40,7 +40,8 @@ export const Home = () => {
             </div>
             <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight leading-none">
               Effortless Parking, <br />
-              <span className="text-primary bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Instant Reservations.</span>
+              <span className="text-primary bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Instant Reservations.</span><br />
+              Yash Deswal
             </h1>
             <p className="text-gray-600 text-lg md:text-xl max-w-lg leading-relaxed">
               Ditch the parking search frustration. Instantly discover, reserve, and manage premium parking slots in real time with our smart-indicator reservation system.
