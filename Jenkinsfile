@@ -59,8 +59,26 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                    docker compose down || true
+                    set -e
+                    
+                    # Load environment variables from .env file
+                    if [ -f .env ]; then
+                        export $(cat .env | grep -v '#' | xargs)
+                    fi
+                    
+                    # Remove existing containers and networks (idempotent)
+                    docker compose down --remove-orphans || true
+                    
+                    # Wait a moment to ensure cleanup
+                    sleep 2
+                    
+                    # Bring up services with environment variables
                     docker compose up -d
+                    
+                    # Verify services are running
+                    echo "Waiting for services to be healthy..."
+                    sleep 10
+                    docker compose ps
                 '''
             }
         }
