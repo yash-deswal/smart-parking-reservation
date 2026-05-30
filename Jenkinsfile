@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'Node18'
+    }
+
     environment {
         DOCKER_IMAGE_BACKEND = 'parking-backend'
         DOCKER_IMAGE_FRONTEND = 'parking-frontend'
