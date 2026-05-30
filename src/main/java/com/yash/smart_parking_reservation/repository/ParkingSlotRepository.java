@@ -11,4 +11,5 @@ public interface ParkingSlotRepository extends JpaRepository<ParkingSlot, Long> 
     long countByReserved(boolean reserved);
     long countByReservedAndActive(boolean reserved, boolean active);
     java.util.List<ParkingSlot> findByReservedAndActive(boolean reserved, boolean active);
+    java.util.List<ParkingSlot> findByActive(boolean active);
 }

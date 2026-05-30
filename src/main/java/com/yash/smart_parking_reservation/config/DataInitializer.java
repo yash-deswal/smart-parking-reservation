@@ -21,9 +21,16 @@ public class DataInitializer implements CommandLineRunner {
                 ParkingSlot slot = ParkingSlot.builder()
                         .slotNumber("Slot " + i)
                         .reserved(false)
+                        .active(true)
                         .build();
                 parkingSlotRepository.save(slot);
             });
+        }
+        
+        java.util.List<ParkingSlot> disabledSlots = parkingSlotRepository.findByActive(false);
+        if (!disabledSlots.isEmpty()) {
+            disabledSlots.forEach(slot -> slot.setActive(true));
+            parkingSlotRepository.saveAll(disabledSlots);
         }
     }
 }
