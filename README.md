@@ -1,68 +1,96 @@
 # Smart Parking Reservation System
 
-A Smart Parking Reservation System built using Spring Boot and MySQL. 
-This application provides REST APIs to manage parking slots, allowing users to reserve and release slots.
-
-## Tech Stack
-
-- Java 21
-- Spring Boot
-- Spring Data JPA
-- MySQL
-- Maven
-- Docker & Docker Compose
-
-## Prerequisites
-
-- Java 21
-- Maven
-- Docker and Docker Compose (if running via Docker)
-
 ## Project Overview
+The Smart Parking Reservation System is a full-stack web application designed to manage and reserve parking slots efficiently. It provides a seamless experience for users to find and book parking spaces, while offering administrators robust tools to manage slots, view reservations, and monitor system usage.
 
-The system manages parking slots (default 20 created on startup). It is backed by a MySQL database (`parking_db`). The application provides endpoints to view all slots, reserve a specific slot, and release a reserved slot.
-The project is structured following clean architecture principles, with distinct packages for controllers, services, repositories, entities, exceptions, and configurations.
+## Features
+- **User Authentication:** Secure login and registration using JWT.
+- **Role-Based Access:** Distinct dashboards and permissions for Users and Admins.
+- **Slot Management:** Admins can add, update, and remove parking slots.
+- **Real-time Reservations:** Users can view available slots and book them in real-time.
+- **Dashboard Analytics:** Comprehensive statistics for administrators.
 
-## How to run locally (Without Docker)
+## Architecture Diagram
+```mermaid
+graph TD
+    User([User / Admin]) -->|HTTP / HTTPS| Nginx[Nginx Reverse Proxy]
+    Nginx -->|/api/*| Backend[Spring Boot Backend]
+    Nginx -->|/*| Frontend[React Frontend]
+    Backend -->|JDBC| DB[(MySQL Database)]
 
-1. Make sure you have a local MySQL instance running on port 3306 with the root password set to `root` and a database named `parking_db` created (or the app will create the schema automatically).
-2. Build and run using Maven:
-```bash
-./mvnw spring-boot:run
+    subgraph CI/CD Pipeline
+        GitHub[GitHub Repository] -->|Push| Jenkins[Jenkins Server]
+        Jenkins -->|Build & Test| DockerEnv[Docker Build]
+        DockerEnv -->|Deploy| Server[Production Server]
+    end
 ```
 
-## How to run using Docker Compose
+## Technology Stack
+- **Frontend:** React, Vite, TypeScript, Tailwind CSS, Axios, React Router.
+- **Backend:** Spring Boot (Java 21), Spring Security, Spring Data JPA, JWT.
+- **Database:** MySQL 8.0.
+- **Infrastructure:** Docker, Docker Compose, Nginx.
+- **CI/CD:** Jenkins.
 
-1. Build the project first to generate the `.jar` file:
-```bash
-./mvnw clean package -DskipTests
-```
+## Local Setup
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd smart-parking-reservation
+   ```
+2. Set up the backend:
+   - Ensure Java 21 and Maven are installed.
+   - Run the Spring Boot application:
+     ```bash
+     ./mvnw spring-boot:run
+     ```
+3. Set up the frontend:
+   - Ensure Node.js is installed.
+   - Install dependencies and start the development server:
+     ```bash
+     cd frontend
+     npm install
+     npm run dev
+     ```
 
-2. Start the services using Docker Compose:
-```bash
-docker-compose up --build -d
-```
-The application will wait for the MySQL container to be healthy before starting.
+## Docker Setup
+The project is fully dockerized for easy deployment.
 
-## API Examples
+1. Copy the environment variables example file:
+   ```bash
+   cp .env.example .env
+   ```
+2. Build and start the containers using Docker Compose:
+   ```bash
+   docker compose up -d --build
+   ```
+   This will start the following services:
+   - **nginx:** Reverse proxy serving on port 80.
+   - **frontend:** React application served via Nginx.
+   - **backend:** Spring Boot application running on port 8080.
+   - **mysql:** Database running on port 3306.
 
-### 1. View all slots
-```bash
-curl -X GET http://localhost:8080/slots
-```
+## Jenkins Setup
+The project includes a `Jenkinsfile` for CI/CD.
+1. Configure Jenkins to pull from your GitHub repository.
+2. Ensure Docker and Docker Compose are installed on the Jenkins server.
+3. The pipeline includes the following stages:
+   - Checkout
+   - Backend Build & Tests
+   - Frontend Build & Tests
+   - Docker Build (Images tagged with `BUILD_NUMBER` and `latest`)
+   - Deploy (Using Docker Compose with a rolling update strategy)
 
-### 2. Reserve a slot (e.g., slot ID 1)
-```bash
-curl -X POST http://localhost:8080/slots/1/reserve
-```
+## Deployment Flow
+1. Code is pushed to the repository.
+2. Jenkins detects the change and triggers the pipeline.
+3. Backend and Frontend are built and tested.
+4. Docker images are built and tagged appropriately.
+5. `docker compose up -d` is executed, which gracefully replaces old containers with new ones (rolling deployment), ensuring no downtime if health checks pass.
 
-### 3. Release a slot (e.g., slot ID 1)
-```bash
-curl -X POST http://localhost:8080/slots/1/release
-```
-
-### 4. Health Check
-```bash
-curl -X GET http://localhost:8080/health
-```
-test
+## Screenshots Section
+*(Add screenshots of the application here)*
+- User Dashboard
+- Admin Dashboard
+- Reservation Flow
+- Login/Registration Pages
