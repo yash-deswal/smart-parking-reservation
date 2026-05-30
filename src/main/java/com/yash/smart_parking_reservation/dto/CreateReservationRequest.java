@@ -1,7 +1,6 @@
 package com.yash.smart_parking_reservation.dto;
 
 import com.yash.smart_parking_reservation.entity.VehicleType;
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
