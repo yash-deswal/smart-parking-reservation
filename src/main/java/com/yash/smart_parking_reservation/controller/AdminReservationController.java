@@ -23,8 +23,8 @@ public class AdminReservationController {
     private final AdminReservationService adminReservationService;
 
     @GetMapping
-    public ResponseEntity<Page<AdminReservationResponse>> getAllReservations(Pageable pageable) {
-        return ResponseEntity.ok(adminReservationService.getAllReservations(pageable));
+    public ResponseEntity<List<AdminReservationResponse>> getAllReservations() {
+        return ResponseEntity.ok(adminReservationService.getAllReservationsList());
     }
 
     @GetMapping("/{id}")

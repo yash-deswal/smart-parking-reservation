@@ -21,6 +21,10 @@ public class ParkingSlotService {
         return parkingSlotRepository.findAll();
     }
 
+    public List<ParkingSlot> getAvailableSlots() {
+        return parkingSlotRepository.findByReservedAndActive(false, true);
+    }
+
     @Transactional
     public ParkingSlot reserveSlot(Long id) {
         ParkingSlot slot = parkingSlotRepository.findById(id)

@@ -20,6 +20,11 @@ public class ParkingSlotController {
         return ResponseEntity.ok(parkingSlotService.getAllSlots());
     }
 
+    @GetMapping("/available")
+    public ResponseEntity<List<ParkingSlot>> getAvailableSlots() {
+        return ResponseEntity.ok(parkingSlotService.getAvailableSlots());
+    }
+
     @PostMapping("/{id}/reserve")
     public ResponseEntity<ParkingSlot> reserveSlot(@PathVariable Long id) {
         ParkingSlot reservedSlot = parkingSlotService.reserveSlot(id);

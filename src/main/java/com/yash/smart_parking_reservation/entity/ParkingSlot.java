@@ -33,10 +33,19 @@ public class ParkingSlot {
     private boolean active = true;
 
     @CreationTimestamp
-    @Column(nullable = false, updatable = false)
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    @com.fasterxml.jackson.annotation.JsonProperty("isAvailable")
+    public boolean getIsAvailable() {
+        return !reserved && active;
+    }
+
+    @com.fasterxml.jackson.annotation.JsonProperty("isDisabled")
+    public boolean getIsDisabled() {
+        return !active;
+    }
 }

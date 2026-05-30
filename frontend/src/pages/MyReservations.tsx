@@ -16,7 +16,7 @@ export const MyReservations = () => {
 
   const fetchReservations = async () => {
     try {
-      const res = await api.get('/reservations');
+      const res = await api.get('/reservations/my');
       setReservations(res.data);
     } catch (err) {
       console.error(err);
@@ -32,7 +32,7 @@ export const MyReservations = () => {
   const handleCancel = async (id: number) => {
     if (!confirm('Are you sure you want to cancel this reservation?')) return;
     try {
-      await api.post(`/reservations/${id}/cancel`);
+      await api.delete(`/reservations/${id}`);
       fetchReservations();
     } catch (err: any) {
       alert(err.response?.data?.message || 'Failed to cancel reservation');

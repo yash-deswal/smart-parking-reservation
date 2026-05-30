@@ -18,4 +18,14 @@ public class SlotResponse {
     private boolean active;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    @com.fasterxml.jackson.annotation.JsonProperty("isAvailable")
+    public boolean getIsAvailable() {
+        return !reserved && active;
+    }
+
+    @com.fasterxml.jackson.annotation.JsonProperty("isDisabled")
+    public boolean getIsDisabled() {
+        return !active;
+    }
 }

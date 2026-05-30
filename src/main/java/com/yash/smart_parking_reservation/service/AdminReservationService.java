@@ -27,6 +27,13 @@ public class AdminReservationService {
     }
 
     @Transactional(readOnly = true)
+    public List<AdminReservationResponse> getAllReservationsList() {
+        return reservationRepository.findAll().stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public AdminReservationResponse getReservationById(Long id) {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new ReservationNotFoundException("Reservation not found with id: " + id));

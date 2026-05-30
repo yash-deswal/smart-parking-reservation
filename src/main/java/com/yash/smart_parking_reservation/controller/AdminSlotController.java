@@ -41,8 +41,20 @@ public class AdminSlotController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}/disable")
+    public ResponseEntity<Void> disableSlot(@PathVariable Long id) {
+        adminSlotService.deactivateSlot(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @PatchMapping("/{id}/enable")
     public ResponseEntity<Void> enableSlot(@PathVariable Long id) {
+        adminSlotService.enableSlot(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/enable")
+    public ResponseEntity<Void> enableSlotPut(@PathVariable Long id) {
         adminSlotService.enableSlot(id);
         return ResponseEntity.noContent().build();
     }
