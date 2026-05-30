@@ -15,6 +15,21 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleUserNotFoundException(UserNotFoundException ex) {
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler(DuplicateSlotException.class)
+    public ResponseEntity<Map<String, Object>> handleDuplicateSlotException(DuplicateSlotException ex) {
+        return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, Object>> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
     @ExceptionHandler(SlotNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleSlotNotFoundException(SlotNotFoundException ex) {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());

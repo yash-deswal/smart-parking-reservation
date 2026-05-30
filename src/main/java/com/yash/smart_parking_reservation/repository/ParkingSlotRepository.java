@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ParkingSlotRepository extends JpaRepository<ParkingSlot, Long> {
+    boolean existsBySlotNumber(String slotNumber);
+    long countByActive(boolean active);
+    long countByReserved(boolean reserved);
+    long countByReservedAndActive(boolean reserved, boolean active);
 }
